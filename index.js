@@ -17,9 +17,9 @@ squares.forEach((square, index) =>{
 
         //check for a winner
         if (checkWinner()){
-            alert(`${currentPlayer} wins!`);
+            document.getElementById("demo").innerHTML = `${currentPlayer} wins!`;
             }else if (board.every(cell => cell !== ' ')) {
-                alert("It is a tie!");
+                document.getElementById("demo").innerHTML = "It is a tie!";
             }else{
                 //switch players 
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
@@ -52,6 +52,8 @@ resetButton.addEventListener('click', ()=>{
         square.textContent = ' ';
     });
     currentPlayer = 'X'; //Reset to player
+
+    document.getElementById("demo").innerHTML = " " ;
 })
 
 
