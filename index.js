@@ -1,33 +1,27 @@
-//get squares and reset button
 const squares = document.querySelectorAll('.square');
 const resetButton = document.getElementById("reset-button");
-let currentPlayer = 'X';//start with player x
-let board = [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',]; //game board 
+let currentPlayer = 'X'; // Start with player X
+let board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']; // Game board
 
- 
+// Functions to handle square clicks
+squares.forEach((square, index) => {
+    square.addEventListener('click', () => {
+        if (board[index] !== ' ' || checkWinner()) return;
 
-//Fucntions to handle square clicks
-squares.forEach((square, index) =>{
-    square.addEventListener('click' , ()=>{
-        //check if the square is already filled or the game is over
-        if (board[index]!== ' ' || checkWinner()) return;
-        //fill the square with the current players symbol
         square.textContent = currentPlayer;
         board[index] = currentPlayer;
 
-        //check for a winner
-        if (checkWinner()){
+        if (checkWinner()) {
             document.getElementById("demo").innerHTML = `${currentPlayer} wins!`;
-            }else if (board.every(cell => cell !== ' ')) {
-                document.getElementById("demo").innerHTML = "It is a tie!";
-            }else{
-                //switch players 
-                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-            }
+        } else if (board.every(cell => cell !== ' ')) {
+            document.getElementById("demo").innerHTML = "It is a tie!";
+        } else {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
     });
 });
 
-//Function to check for a winner
+// Function to check for a winner
 function checkWinner() {
     const winningCombinations = [
         [0, 1, 2],
@@ -52,6 +46,7 @@ function checkWinner() {
     return false;
 }
 
+// Function to draw the winning line
 function drawWinningLine(combination) {
     const line = document.getElementById('line');
     const winnerLine = document.getElementById('winner-line');
@@ -70,16 +65,15 @@ function drawWinningLine(combination) {
     winnerLine.style.display = 'block';
 }
 
-resetButton.addEventListener('click', ()=>{
+// Reset button functionality
+resetButton.addEventListener('click', () => {
+    // Clear the board and reset the game state
     board.fill(' ');
     squares.forEach(square => {
         square.textContent = ' ';
     });
-    currentPlayer = 'X'; //Reset to player
-
-    document.getElementById("demo").innerHTML = " " ;
-})
-
-
-
- 
+    currentPlayer = 'X'; // Reset to player X
+    document.getElementById('winner-line').style.display = 'none'; // Hide the winning line
+    document.getElementById("demo").innerHTML = ""; // Clear win/tie message
+    console.log("Game has been reset."); // Debugging output
+});
